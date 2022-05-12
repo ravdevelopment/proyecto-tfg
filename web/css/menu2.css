@@ -1,0 +1,7 @@
+.carta_anuncios {
+    opacity: 0.9;
+}
+
+.carta_anuncios:hover {
+    opacity: 1;
+}
