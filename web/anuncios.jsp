@@ -99,8 +99,8 @@
                                 COMPROBACION SI TIENE ROL DE EMPRESA 
                                 >-->
                                 <div class="col-lg-3 col-md-4 d-flex">
-                                    <button style="background-color: gray !important" class="btn-primary w-100 align-self-center" disabled> PUBLICAR OFERTA DE EMPLEO </button>
-                                </div
+                                    <button style="background-color: gray !important" class="btn-primary w-100 align-self-center" disabled=""> PUBLICAR OFERTA DE EMPLEO </button>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -109,12 +109,13 @@
                         <div class="container">
                             <div class="card rounded-0">
                                 <div class="card-body">
-                                    <form action="controller" class="row">
+                                    <form action="controller" method="get" class="row">
                                         <div class="col-lg-3 col-md-6 d-flex stat my-3">
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Por Localidad</h6>
-                                                <select>
-                                                    <% for (int i = 0; i < controladorAnuncios.localidades(bd).size(); i++) {%>
+                                                <select name="localidad">
+                                                    <% for (int i = 0; i < controladorAnuncios.localidades(bd).size(); i++) {
+                                                    %>
                                                     <option><%=controladorAnuncios.localidades(bd).get(i)%></option>
                                                     <% } %>
                                                 </select>
@@ -123,7 +124,7 @@
                                         <div class="col-lg-3 col-md-6 d-flex stat my-3">
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Por Empresa</h6>
-                                                <select>
+                                                <select name="nombre_empresa">
                                                     <% for (int i = 0; i < controladorAnuncios.empresas(bd).size(); i++) {%>
                                                     <option><%=controladorAnuncios.empresas(bd).get(i)%></option>
                                                     <% }%>
@@ -133,7 +134,7 @@
                                         <div class="col-lg-3 col-md-6 d-flex stat my-3">
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Por Fecha</h6>
-                                                <select>
+                                                <select name="fecha_publicacion">
                                                     <% for (int i = 0; i < controladorAnuncios.fechapublicaciones(bd).size(); i++) {%>
                                                     <option><%=controladorAnuncios.fechapublicaciones(bd).get(i)%></option>
                                                     <% }%>
@@ -142,7 +143,7 @@
                                         </div>
                                         <div class="col-lg-3 col-md-6 d-flex my-3">
                                             <div class="ml-auto mr-auto">
-                                                <button class="btn btn-primary">Filtrar</button>
+                                                <button type="submit" name="filtrarAnuncios" class="btn btn-primary">Filtrar</button>
                                                 <button class="btn btn-primary">Reset</button>
                                             </div>
                                         </div>
@@ -160,11 +161,10 @@
                                         <div class="card rounded-0">
 
                                             <div class="card-header bg-light">
-                                                <h6 style="text-align: center" class="font-weight-bold mb-0"></h6>
-                                                    <h2 class="align-self-center mb-0"><img style="width: 2em" src="<%= controladorAnuncios.anunciosPublicados.get(i).getLogo()%>"</h2>
-                                                    <small>FECHA DE PUBLICACIÓN
-                                                        <%= controladorAnuncios.anunciosPublicados.get(i).getFecha_publicacion()%>
-                                                    </small>
+                                                <h2 class="align-self-center mb-0"><img style="width: 2em" alt="" src="<%= controladorAnuncios.anunciosPublicados.get(i).getLogo()%>"></h2>
+                                                <small>FECHA DE PUBLICACIÓN
+                                                    <%= controladorAnuncios.anunciosPublicados.get(i).getFecha_publicacion()%>
+                                                </small>
 
                                             </div>
                                             <div class="card-body pt-2">
@@ -186,6 +186,7 @@
                                             <div class="card-header bg-light">
                                                 <h6 style="text-align: center" class="font-weight-bold mb-0">
                                                     Método de contacto
+                                                </h6>
                                             </div>
                                             <div class="card-body pt-2">
                                                 <div class="d-flex border-bottom py-2 mb-3">

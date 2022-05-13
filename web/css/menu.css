@@ -232,7 +232,17 @@ body {
     opacity: 0.7;
 }
 .anunciosempresas:hover {
-    opacity: 1;
+    opacity: 1 !important; 
+    border: 0.3em solid #6c757d !important;
+    border-radius: 1em !important;
+    background-color: gold !important;
+    font-size: larger !important;
+    color: black !important;
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+    align-items: center !important;
+    cursor: pointer;
 }
 
 a:hover {
