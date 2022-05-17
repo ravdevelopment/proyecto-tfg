@@ -127,11 +127,12 @@ public class UsuariosDAO {
 //        return rolesusuario;
 //    }
 //
-//    public void modificarDatosUsuario(Connection bd, String nombre, String apellidos, String email, String pass, String dni) {
-//        try {
-//            Statement st = bd.createStatement();
-//            st.executeUpdate("UPDATE usuarios set nombre = '" + nombre + "', apellidos = '" + apellidos + "', email = '" + email + "', password = '" + pass + "' where dni_usuario = " + dni);
-//        } catch (SQLException ex) {
-//        }
-//    }
+    public void modificarDatosUsuario(Connection bd, String nombre, String apellidos, String municipio, String email, String pass, String dni, String estado) {
+        try {
+            Statement st = bd.createStatement();
+            st.executeUpdate("UPDATE usuario set nombre = '" + nombre + "', apellidos = '" + apellidos + "', municipio = '" + municipio + "', email = '" + email + "', password = '" + pass + "', estado = '" + estado + "' where dni = '" + dni + "'");
+            listaUsuarios = null;
+        } catch (SQLException ex) {
+        }
+    }
 }

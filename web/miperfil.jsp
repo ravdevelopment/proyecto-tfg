@@ -141,14 +141,14 @@
                                         <div class="card-header bg-light">
                                             <h6 style="text-align: center" class="font-weight-bold mb-0">Mis datos de usuario</h6>
                                         </div>
-                                        <div class="card-body pt-2">
+                                        <form action="controller" class="card-body pt-2" method="post">
                                             <div class="d-flex border-bottom py-2 mb-3" style="display:flex; justify-content: space-around">
                                                 <div class="d-flex mr-3">
                                                     <h1 class="col-lg-8"><i class="fa-solid fa-user-pen"></i></h1>
                                                 </div>
                                                 <div class="align-self-center">
                                                     <h6 class="d-block text-muted">Nombre</h6>
-                                                    <input type="text" id="nombre" name="nombre" value="<%= usuario_conectado.getNombre()%>" />
+                                                    <input type="text" id="nombre" name="nombre_usuario" value="<%= usuario_conectado.getNombre()%>"/>
                                                 </div>
                                             </div>
                                             <div class="d-flex border-bottom py-2 mb-3" style="display:flex; justify-content: space-around">
@@ -158,7 +158,7 @@
 
                                                 <div class="align-self-center">
                                                     <h6 class="d-block text-muted">Apellidos</h6>
-                                                    <input type="text" id="apellidos" name="apellidos" value="<%= usuario_conectado.getApellidos()%>"/>
+                                                    <input type="text" id="apellidos" name="apellidos_usuario" value="<%= usuario_conectado.getApellidos()%>"/>
                                                 </div>
                                             </div>
                                             <div class="d-flex border-bottom py-2 mb-3" style="display:flex; justify-content: space-around">
@@ -167,7 +167,7 @@
                                                 </div>
                                                 <div class="align-self-center">
                                                     <h6 class="d-block text-muted">Email</h6>
-                                                    <input type="text" name="email" value="<%= usuario_conectado.getEmail()%>"/>
+                                                    <input type="text" name="email_usuario" value="<%= usuario_conectado.getEmail()%>"/>
                                                 </div>
                                             </div>
                                             <div class="d-flex border-bottom py-2 mb-3" style="display:flex; justify-content: space-around">
@@ -176,7 +176,7 @@
                                                 </div>
                                                 <div class="align-self-center">
                                                     <h6 class="d-block text-muted">Contraseña</h6>
-                                                    <input type="password" name="password" value="*********"/>
+                                                    <input type="password" name="password_usuario" value="*********"/>
                                                 </div>
                                             </div>
                                             <div class="d-flex border-bottom py-2 mb-3" style="display:flex; justify-content: space-around">
@@ -185,7 +185,7 @@
                                                 </div>
                                                 <div class="align-self-center">
                                                     <h6 class="d-block text-muted">Teléfono</h6>
-                                                    <input type="text" name="telefono" value="<%= usuario_conectado.getTelefonoContacto()%>"/>
+                                                    <input type="text" name="telefono_usuario" value="<%= usuario_conectado.getTelefonoContacto()%>"/>
                                                 </div>
                                             </div>
                                             <div class="d-flex border-bottom py-2 mb-3" style="display:flex; justify-content: space-around">
@@ -194,7 +194,7 @@
                                                 </div>
                                                 <div class="align-self-center">
                                                     <h6 class="d-block text-muted">Municipio</h6>
-                                                    <input type="text" name="Municipio" value="<%= usuario_conectado.getMunicipio()%>"/>
+                                                    <input type="text" name="municipio_usuario" value="<%= usuario_conectado.getMunicipio()%>"/>
                                                 </div>
                                             </div>
                                             <div class="d-flex border-bottom py-2 mb-3" style="display:flex; justify-content: space-around">
@@ -203,14 +203,15 @@
                                                 </div>
                                                 <div class="align-self-center">
                                                     <h6 class="d-block text-muted">Estado</h6>
-                                                    <select>
+                                                    <select name="status_usuario">
                                                         <option>Visible para las empresas</option>
                                                         <option>No visible para las empresas</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <button class="btn btn-primary w-100">Modificar</button>
-                                        </div>
+                                                <input type="submit" name="boton_inter" class="btn btn-primary w-100" value="Modificar">
+                                                <input type="hidden" name="estado" value="modificar_datos_usuario">
+                                        </form>
                                     </div>
                                 </div>
                                 <div id="imagenes" style="display: none" class="col-lg-6 my-3 ">

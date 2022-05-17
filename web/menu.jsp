@@ -160,7 +160,10 @@
                                                 </div>
                                             </div>
                                             <% }%>
-                                            <button class="btn btn-primary w-100">Ver todos</button>
+                                            <form action="controller" method="post">
+                                                <input type="submit" name="boton_interno" class="btn btn-primary w-100" value="Ver todos">
+                                                <input type="hidden" name="estado" value="anuncios">
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -223,7 +226,7 @@
                             </div>
                         </div>
                     </section>
-    
+
                 </div>
 
             </div>

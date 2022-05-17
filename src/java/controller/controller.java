@@ -113,8 +113,21 @@ public class controller extends HttpServlet {
 
         if (estado.equals("logout")) {
             session.invalidate();
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("/index.jsp");
             return;
+        }
+        
+        if (estado.equals("modificar_datos_usuario")) {
+            String nombre_usuario = request.getParameter("nombre_usuario");
+            String apellidos_usuario = request.getParameter("apellidos_usuario");
+            String email_usuario = request.getParameter("email_usuario");
+            String municipio_usuario = request.getParameter("municipio_usuario");
+            String password_usuario = request.getParameter("password_usuario");
+            Integer telefono_usuario = Integer.parseInt(request.getParameter("telefono_usuario"));
+            String estado_usuario = request.getParameter("status_usuario");
+            String dni_usuario = usuario_conectado.getDni();
+            usuariosDAO.modificarDatosUsuario(baseDatos, nombre_usuario, apellidos_usuario, municipio_usuario, email_usuario, password_usuario, dni_usuario, estado_usuario);
+            nextPage = "/miperfil.jsp";
         }
 
         ServletContext servletContext = getServletContext();
