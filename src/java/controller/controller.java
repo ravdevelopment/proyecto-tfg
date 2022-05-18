@@ -52,7 +52,7 @@ public class controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
-        session.setAttribute("usuarios", usuariosDAO.listaUsuarios);
+        //session.setAttribute("usuarios", usuariosDAO.listaUsuarios);
         session.setAttribute("database", baseDatos);
         estado = request.getParameter("estado");
         String accion = request.getParameter("accion");
@@ -60,7 +60,7 @@ public class controller extends HttpServlet {
         if (estado.equals("menu")) {
             dniAcceso = request.getParameter("dni");
             passwordAcceso = request.getParameter("password");
-            if (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso) == true) {
+            if (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true) {
                 session.setAttribute("dniConectado", dniAcceso);
                 usuario_conectado = usuariosDAO.obtenerDatosUsuario(dniAcceso, baseDatos);
                 session.setAttribute("usuarioConectado", usuario_conectado);
@@ -102,7 +102,7 @@ public class controller extends HttpServlet {
             if (usuariosDAO.registroUsuario(registroUsuario, baseDatos)) {
                 usuario_conectado = usuariosDAO.obtenerDatosUsuario(dniRegistro, baseDatos);
                 session.setAttribute("usuarioConectado", usuario_conectado);
-                usuariosDAO.listaUsuarios.add(registroUsuario);
+                //usuariosDAO.listaUsuarios.add(registroUsuario);
                 nextPage = "/menu.jsp";
             } else {
                 session.setAttribute("falloindex", "El dni utilizado está en uso, prueba a iniciar sesión.");
@@ -113,7 +113,7 @@ public class controller extends HttpServlet {
 
         if (estado.equals("logout")) {
             session.invalidate();
-            response.sendRedirect("/index.jsp");
+            response.sendRedirect("index.jsp");
             return;
         }
         

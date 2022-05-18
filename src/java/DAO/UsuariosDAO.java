@@ -41,12 +41,17 @@ public class UsuariosDAO {
         }
     }
 
-    public boolean comprobarUsuario(String dni, String password) {
+    public boolean comprobarUsuario(String dni, String password, Connection bd) {
         boolean encontrado = false;
-        for (int i = 0; i < listaUsuarios.size(); i++) {
-            if (listaUsuarios.get(i).getDni().equals(dni) && listaUsuarios.get(i).getPassword().equals(password)) {
-                encontrado = true;
-            }
+
+        try {
+            Statement st = bd.createStatement();
+            ResultSet resultadoDAO = st.executeQuery("SELECT * from usuario where dni='" + dni + "' and password='" + password + "'");
+            encontrado = true;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            encontrado = false;
         }
         return encontrado;
     }
@@ -93,14 +98,14 @@ public class UsuariosDAO {
         }
         return usuario_conectado;
     }
-    
+
     public String obtenerImagenUsuario(String dni, Connection bd) {
         String usuarioimg = " ";
         try {
             Statement st = bd.createStatement();
             ResultSet resultadoDAO = st.executeQuery("SELECT imagen from usuario where dni_usuario = '" + dni + "'");
             while (resultadoDAO.next()) {
-               usuarioimg = resultadoDAO.getString("imagen");
+                usuarioimg = resultadoDAO.getString("imagen");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -132,6 +137,8 @@ public class UsuariosDAO {
             Statement st = bd.createStatement();
             st.executeUpdate("UPDATE usuario set nombre = '" + nombre + "', apellidos = '" + apellidos + "', municipio = '" + municipio + "', email = '" + email + "', password = '" + pass + "', estado = '" + estado + "' where dni = '" + dni + "'");
             listaUsuarios = null;
+            UsuariosDAO refresh = new UsuariosDAO();
+            refresh.cargarUsuarios(bd);
         } catch (SQLException ex) {
         }
     }
