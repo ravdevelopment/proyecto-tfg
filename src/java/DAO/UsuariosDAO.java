@@ -15,9 +15,8 @@ import model.Usuario_Rol;
  */
 public class UsuariosDAO {
 
-    public ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
-
-    public void cargarUsuarios(Connection bd) {
+    public ArrayList<Usuario> cargarUsuarios(Connection bd) {
+        ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
         try {
             Statement st = bd.createStatement();
             ResultSet resultadoDAO = st.executeQuery("SELECT * from usuario");
@@ -39,19 +38,23 @@ public class UsuariosDAO {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return listaUsuarios;
     }
 
     public boolean comprobarUsuario(String dni, String password, Connection bd) {
         boolean encontrado = false;
-
         try {
             Statement st = bd.createStatement();
             ResultSet resultadoDAO = st.executeQuery("SELECT * from usuario where dni='" + dni + "' and password='" + password + "'");
-            encontrado = true;
+            if (resultadoDAO.first()) {
+                encontrado = true;
+            } else {
+                encontrado = false;
+
+            }
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            encontrado = false;
         }
         return encontrado;
     }
@@ -90,7 +93,6 @@ public class UsuariosDAO {
                 usuario_conectado.setEstado(resultadoDAO.getString("estado"));
                 usuario_conectado.setTelefonoContacto(resultadoDAO.getInt("telefono"));
                 usuario_conectado.setNota(resultadoDAO.getFloat("nota"));
-                listaUsuarios.add(usuario_conectado);
                 count++;
             }
         } catch (Exception ex) {
@@ -136,9 +138,6 @@ public class UsuariosDAO {
         try {
             Statement st = bd.createStatement();
             st.executeUpdate("UPDATE usuario set nombre = '" + nombre + "', apellidos = '" + apellidos + "', municipio = '" + municipio + "', email = '" + email + "', password = '" + pass + "', estado = '" + estado + "' where dni = '" + dni + "'");
-            listaUsuarios = null;
-            UsuariosDAO refresh = new UsuariosDAO();
-            refresh.cargarUsuarios(bd);
         } catch (SQLException ex) {
         }
     }

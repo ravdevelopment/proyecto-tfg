@@ -31,10 +31,11 @@
     <body>
         <%
             Usuario usuario_conectado = (Usuario) session.getAttribute("usuarioConectado");
+            Connection bd = (Connection) session.getAttribute("database");
             AnunciosDAO controladorAnuncios = new AnunciosDAO();
-            controladorAnuncios.cargarAnuncios((Connection) session.getAttribute("database"));
-            UsuariosDAO usuariosRegistados = new UsuariosDAO();
-            usuariosRegistados.cargarUsuarios((Connection) session.getAttribute("database"));
+            ArrayList<Anuncio> anuncios = controladorAnuncios.cargarAnuncios(bd);
+            UsuariosDAO controladorUsuariosDAO = new UsuariosDAO();
+            ArrayList<Usuario> usuarios = controladorUsuariosDAO.cargarUsuarios(bd);
 
         %>
         <div class="d-flex" id="content-wrapper">
@@ -115,19 +116,19 @@
                                         <div class="col-lg-3 col-md-6 d-flex stat my-3">
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Anuncios publicados</h6>
-                                                <h3 style="text-align: center" class="font-weight-bold"><%=controladorAnuncios.anunciosPublicados.size()%></h3>
+                                                <h3 style="text-align: center" class="font-weight-bold"><%= anuncios.size()  %></h3>
                                             </div>
                                         </div>
                                         <div class="col-lg-3 col-md-6 d-flex stat my-3">
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Alumnos registrados</h6>
-                                                <h3 style="text-align: center" class="font-weight-bold"><%=usuariosRegistados.listaUsuarios.size()%></h3>
+                                                <h3 style="text-align: center" class="font-weight-bold"><%=usuarios.size()%></h3>
                                             </div>
                                         </div>
                                         <div class="col-lg-3 col-md-6 d-flex my-3">
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Empresas registradas</h6>
-                                                <h3 style="text-align: center" class="font-weight-bold"><%=usuariosRegistados.listaUsuarios.size()%></h3>
+                                                <h3 style="text-align: center" class="font-weight-bold"><%= controladorAnuncios.empresas(bd).size() %></h3>
                                             </div>
                                         </div>
                                     </div>
@@ -144,15 +145,15 @@
                                             <h6 style="text-align: center" class="font-weight-bold mb-0">Últimos anuncios publicados</h6>
                                         </div>
                                         <div class="card-body pt-2">
-                                            <%                    for (int i = 0; i < controladorAnuncios.anunciosPublicados.size(); i++) {%>
+                                            <%                    for (int i = 0; i < anuncios.size(); i++) {%>
                                             <div class="d-flex border-bottom py-2 mb-3, anunciosempresas">
                                                 <div class="d-flex mr-3">
-                                                    <h2 class="align-self-center mb-0"><img style="width: 2em" src="<%= controladorAnuncios.anunciosPublicados.get(i).getLogo()%>"</h2>
+                                                    <h2 class="align-self-center mb-0"><img style="width: 2em" src="<%= anuncios.get(i).getLogo()%>"</h2>
                                                 </div>
                                                 <div class="align-self-center">
                                                     <i class="fa-solid fa-rectangle-ad lead"></i>
-                                                    <small class="d-block text-muted"><%= controladorAnuncios.anunciosPublicados.get(i).getNombre_empresa()%></small>
-                                                    <small class="d-block text-muted"><%= controladorAnuncios.anunciosPublicados.get(i).getMunicipio()%></small>
+                                                    <small class="d-block text-muted"><%= anuncios.get(i).getNombre_empresa()%></small>
+                                                    <small class="d-block text-muted"><%= anuncios.get(i).getMunicipio()%></small>
 
                                                 </div>
                                                 <div class="ml-auto">
@@ -207,7 +208,7 @@
                                                 </div>
                                                 <div class="align-self-center">
                                                     <h6 class="d-block text-muted">Contraseña</h6>
-                                                    <input type="password" name="password" value="*********"/>
+                                                    <input type="password" name="password" value="<%=usuario_conectado.getPassword()%>"/>
                                                 </div>
                                             </div>
                                             <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3, datosusuario">

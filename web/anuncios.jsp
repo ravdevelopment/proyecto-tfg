@@ -33,9 +33,9 @@
             Connection bd = (Connection) session.getAttribute("database");
             Usuario usuario_conectado = (Usuario) session.getAttribute("usuarioConectado");
             AnunciosDAO controladorAnuncios = new AnunciosDAO();
-            controladorAnuncios.cargarAnuncios(bd);
-            UsuariosDAO usuariosRegistados = new UsuariosDAO();
-            usuariosRegistados.cargarUsuarios(bd);
+            ArrayList<Anuncio> listaanuncios = controladorAnuncios.cargarAnuncios(bd);
+            UsuariosDAO usuariosDAO = new UsuariosDAO();
+            ArrayList<Usuario> listausuarios = usuariosDAO.cargarUsuarios(bd);
 
         %>
         <div class="d-flex" id="content-wrapper">
@@ -155,15 +155,15 @@
                     <section>
                         <div class="container">
                             <div style="justify-content: center" class="row">
-                                <%                    for (int i = 0; i < controladorAnuncios.anunciosPublicados.size(); i++) {%>
+                                <%                    for (int i = 0; i < listaanuncios.size(); i++) {%>
                                 <div class="col-lg-12 row">
                                     <div class="col-lg-8 my-3">
                                         <div class="card rounded-0">
 
                                             <div class="card-header bg-light">
-                                                <h2 class="align-self-center mb-0"><img style="width: 2em" alt="" src="<%= controladorAnuncios.anunciosPublicados.get(i).getLogo()%>"></h2>
+                                                <h2 class="align-self-center mb-0"><img style="width: 2em" alt="" src="<%= listaanuncios.get(i).getLogo()%>"></h2>
                                                 <small>FECHA DE PUBLICACIÓN
-                                                    <%= controladorAnuncios.anunciosPublicados.get(i).getFecha_publicacion()%>
+                                                    <%= listaanuncios.get(i).getFecha_publicacion()%>
                                                 </small>
 
                                             </div>
@@ -172,9 +172,9 @@
                                                 <div class="d-flex border-bottom py-2 mb-3">
 
                                                     <div class="align-self-center">
-                                                        <h3 class=""><%= controladorAnuncios.anunciosPublicados.get(i).getNombre_empresa()%></h3>
-                                                        <h5 class=""><%= controladorAnuncios.anunciosPublicados.get(i).getMunicipio()%></h5>
-                                                        <%= controladorAnuncios.anunciosPublicados.get(i).getMensaje()%>
+                                                        <h3 class=""><%= listaanuncios.get(i).getNombre_empresa()%></h3>
+                                                        <h5 class=""><%= listaanuncios.get(i).getMunicipio()%></h5>
+                                                        <%= listaanuncios.get(i).getMensaje()%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -191,12 +191,12 @@
                                             <div class="card-body pt-2">
                                                 <div class="d-flex border-bottom py-2 mb-3">
                                                     <div class="mx-auto">
-                                                        Teléfono  <%= controladorAnuncios.anunciosPublicados.get(i).getTelefono()%>
+                                                        Teléfono  <%= listaanuncios.get(i).getTelefono()%>
                                                     </div>
                                                 </div>
                                                 <div class="d-flex border-bottom py-2 mb-3">
                                                     <div class="mx-auto">
-                                                        <small> <%= controladorAnuncios.anunciosPublicados.get(i).getEmail()%></small>
+                                                        <small> <%= listaanuncios.get(i).getEmail()%></small>
                                                     </div>
                                                 </div>
                                             </div>

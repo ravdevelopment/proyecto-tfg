@@ -45,14 +45,12 @@ public class controller extends HttpServlet {
         ConnectorBD conexion = new ConnectorBD(servidor, database, usuario, password);
         baseDatos = conexion.getConexion();
         usuariosDAO = new UsuariosDAO();
-        usuariosDAO.cargarUsuarios(baseDatos);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
-        //session.setAttribute("usuarios", usuariosDAO.listaUsuarios);
         session.setAttribute("database", baseDatos);
         estado = request.getParameter("estado");
         String accion = request.getParameter("accion");
@@ -73,19 +71,19 @@ public class controller extends HttpServlet {
                 nextPage = "/index.jsp";
             }
         }
-        if(estado.equals("inicio")) {
+        if(estado.equals("inicio") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             nextPage = "/menu.jsp";
         }
-        if(estado.equals("anuncios")) {
+        if(estado.equals("anuncios") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             nextPage = "/anuncios.jsp";
         }
-        if(estado.equals("proyectos")) {
+        if(estado.equals("proyectos") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             nextPage = "/proyectos.jsp";
         }
-        if(estado.equals("calificaciones")) {
+        if(estado.equals("calificaciones") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             nextPage = "/calificaciones.jsp";
         }
-        if(estado.equals("miperfil")) {
+        if(estado.equals("miperfil") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             nextPage = "/miperfil.jsp";
         }
         
@@ -117,7 +115,7 @@ public class controller extends HttpServlet {
             return;
         }
         
-        if (estado.equals("modificar_datos_usuario")) {
+        if (estado.equals("modificar_datos_usuario") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             String nombre_usuario = request.getParameter("nombre_usuario");
             String apellidos_usuario = request.getParameter("apellidos_usuario");
             String email_usuario = request.getParameter("email_usuario");

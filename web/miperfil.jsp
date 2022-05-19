@@ -31,10 +31,13 @@
     <body>
         <%
             Usuario usuario_conectado = (Usuario) session.getAttribute("usuarioConectado");
+            Connection bd = (Connection) session.getAttribute("database");
             AnunciosDAO controladorAnuncios = new AnunciosDAO();
             controladorAnuncios.cargarAnuncios((Connection) session.getAttribute("database"));
             UsuariosDAO usuariosRegistados = new UsuariosDAO();
-            usuariosRegistados.cargarUsuarios((Connection) session.getAttribute("database"));
+            ArrayList<Usuario> listausuarios = usuariosRegistados.cargarUsuarios(bd);
+            usuario_conectado = usuariosRegistados.obtenerDatosUsuario(usuario_conectado.getDni(), bd);
+
 
         %>
         <div class="d-flex" id="content-wrapper">
@@ -55,7 +58,7 @@
                         Anuncios</a>
                     <!--  <a href="#" class="d-block text-light p-3 border-0"> <i class="icon ion-md-settings lead mr-2"></i>
                           Configuración</a> -->
-                    
+
                 </div>
             </div>
             <div class="w-100">
@@ -176,7 +179,7 @@
                                                 </div>
                                                 <div class="align-self-center">
                                                     <h6 class="d-block text-muted">Contraseña</h6>
-                                                    <input type="password" name="password_usuario" value="*********"/>
+                                                    <input type="password" name="password_usuario" value="<%= usuario_conectado.getPassword()%>"/>
                                                 </div>
                                             </div>
                                             <div class="d-flex border-bottom py-2 mb-3" style="display:flex; justify-content: space-around">
@@ -209,8 +212,8 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                                <input type="submit" name="boton_inter" class="btn btn-primary w-100" value="Modificar">
-                                                <input type="hidden" name="estado" value="modificar_datos_usuario">
+                                            <input type="submit" name="boton_inter" class="btn btn-primary w-100" value="Modificar">
+                                            <input type="hidden" name="estado" value="modificar_datos_usuario">
                                         </form>
                                     </div>
                                 </div>

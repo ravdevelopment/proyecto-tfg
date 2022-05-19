@@ -18,10 +18,10 @@ import model.Anuncio;
  */
 public class AnunciosDAO {
 
-    public ArrayList<Anuncio> anunciosPublicados = new ArrayList<Anuncio>();
-
-    public void cargarAnuncios(Connection bd) {
+    public ArrayList<Anuncio> cargarAnuncios(Connection bd) {
+        ArrayList<Anuncio> anunciosPublicados = new ArrayList<Anuncio>();
         try {
+            
             Statement st = bd.createStatement();
             ResultSet resultadoDAO = st.executeQuery("SELECT * from anuncio");
             int count = 0;
@@ -42,6 +42,7 @@ public class AnunciosDAO {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return anunciosPublicados;
     }
 
     public ArrayList<String> localidades(Connection bd) {
