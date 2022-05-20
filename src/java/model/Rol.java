@@ -6,24 +6,24 @@
 package model;
 
 public class Rol {
-    Integer id_rol;
+    int id_rol;
     String nombre_rol;
     String descripcion;
     
     public Rol(){}
 
-    public Rol(Integer id_rol, String nombre_rol, String descripcion) {
+    public Rol(int id_rol, String nombre_rol, String descripcion) {
         this.id_rol = id_rol;
         this.nombre_rol = nombre_rol;
         this.descripcion = descripcion;
     }
 
     
-    public Integer getId_rol() {
+    public int getId_rol() {
         return id_rol;
     }
 
-    public void setId_rol(Integer id_rol) {
+    public void setId_rol(int id_rol) {
         this.id_rol = id_rol;
     }
 

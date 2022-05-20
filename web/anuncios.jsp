@@ -4,6 +4,7 @@
     Author     : Ravpracticas.vsti
 --%>
 
+<%@page import="model.Usuario_Rol"%>
 <%@page import="DAO.UsuariosDAO"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="DAO.AnunciosDAO"%>
@@ -36,7 +37,8 @@
             ArrayList<Anuncio> listaanuncios = controladorAnuncios.cargarAnuncios(bd);
             UsuariosDAO usuariosDAO = new UsuariosDAO();
             ArrayList<Usuario> listausuarios = usuariosDAO.cargarUsuarios(bd);
-
+            Usuario_Rol rolesusuario = new Usuario_Rol();
+            rolesusuario = usuariosDAO.obtenerRolesUsuario(bd, usuario_conectado.getDni());
         %>
         <div class="d-flex" id="content-wrapper">
             <div id="sidebar-container" class="bg-primary">

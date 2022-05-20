@@ -115,25 +115,25 @@ public class UsuariosDAO {
         return usuarioimg;
     }
 
-//    public Usuario_Rol obtenerRolesUsuario(Connection bd, String dni) {
-//        Usuario_Rol rolesusuario = new Usuario_Rol();
-//        rolesusuario.setDni_usuario(dni);
-//        try {
-//            Statement st = bd.createStatement();
-//            ResultSet valores = st.executeQuery("SELECT rol.nombre_rol,rol.id_rol FROM rol,usuario_rol WHERE (usuario_rol.dni_usuario = " + dni + ") AND (rol.id_rol = usuario_rol.id_rol)");
-//            ArrayList<Rol> roles = new ArrayList<Rol>();
-//            while (valores.next()) {
-//                Rol nuevo = new Rol();
-//                nuevo.setNombre_rol(valores.getString("nombre_rol"));
-//                nuevo.setId_rol(valores.getInt("id_rol"));
-//                roles.add(nuevo);
-//            }
-//            rolesusuario.setRoles(roles);
-//        } catch (SQLException ex) {
-//        }
-//        return rolesusuario;
-//    }
-//
+    public Usuario_Rol obtenerRolesUsuario(Connection bd, String dni) {
+        Usuario_Rol rolesusuario = new Usuario_Rol();
+        rolesusuario.setDni_usuario(dni);
+        try {
+            Statement st = bd.createStatement();
+            ResultSet valores = st.executeQuery("SELECT rol.nombre_rol,rol.id_rol FROM rol,usuario_rol WHERE (usuario_rol.dni_usuario = '" + dni + "') AND (rol.id_rol = usuario_rol.id_rol)");
+            ArrayList<Rol> roles = new ArrayList();
+            while (valores.next()) {
+                Rol nuevo = new Rol();
+                nuevo.setNombre_rol(valores.getString("nombre_rol"));
+                nuevo.setId_rol(valores.getInt("id_rol"));
+                roles.add(nuevo);
+            }
+            rolesusuario.setRoles(roles);
+        } catch (SQLException ex) {
+        }
+        return rolesusuario;
+    }
+
     public void modificarDatosUsuario(Connection bd, String nombre, String apellidos, String municipio, String email, String pass, String dni, String estado) {
         try {
             Statement st = bd.createStatement();

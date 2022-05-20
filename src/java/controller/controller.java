@@ -55,6 +55,9 @@ public class controller extends HttpServlet {
         estado = request.getParameter("estado");
         String accion = request.getParameter("accion");
         String nextPage = "";
+        
+        
+        
         if (estado.equals("menu")) {
             dniAcceso = request.getParameter("dni");
             passwordAcceso = request.getParameter("password");
@@ -62,9 +65,6 @@ public class controller extends HttpServlet {
                 session.setAttribute("dniConectado", dniAcceso);
                 usuario_conectado = usuariosDAO.obtenerDatosUsuario(dniAcceso, baseDatos);
                 session.setAttribute("usuarioConectado", usuario_conectado);
-//                Usuario_Rol usuarioActual;
-//                usuarioActual = usuariosDAO.obtenerRolesUsuario(baseDatos, dniAcceso);
-//                session.setAttribute("Dniroles", usuarioActual);
                 nextPage = "/menu.jsp";
             } else {
                 session.setAttribute("falloindex", "El usuario y/o contraseña introducidos son incorrectos.");

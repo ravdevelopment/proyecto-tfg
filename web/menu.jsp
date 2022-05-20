@@ -4,6 +4,7 @@
     Author     : Ravpracticas.vsti
 --%>
 
+<%@page import="model.Usuario_Rol"%>
 <%@page import="DAO.UsuariosDAO"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="DAO.AnunciosDAO"%>
@@ -36,7 +37,8 @@
             ArrayList<Anuncio> anuncios = controladorAnuncios.cargarAnuncios(bd);
             UsuariosDAO controladorUsuariosDAO = new UsuariosDAO();
             ArrayList<Usuario> usuarios = controladorUsuariosDAO.cargarUsuarios(bd);
-
+            Usuario_Rol rolesusuario = new Usuario_Rol();
+            rolesusuario = controladorUsuariosDAO.obtenerRolesUsuario(bd, usuario_conectado.getDni());
         %>
         <div class="d-flex" id="content-wrapper">
             <div id="sidebar-container" class="bg-primary">
@@ -54,8 +56,17 @@
                         Proyectos</a>
                     <a href="controller?estado=anuncios" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i>
                         Anuncios</a>
+                        <%
+                            for (int i = 0; i < rolesusuario.getRoles().size(); i++) {
+                                if (rolesusuario.getRoles().get(i).getNombre_rol().equals("administrador")) {
+                        %>
                     <a href="#" class="d-block text-light p-3 border-0"> <i class="icon ion-md-settings lead mr-2"></i>
                         Configuración</a>
+                        <%
+                                }
+                            }
+                        %>
+
                 </div>
             </div>
             <div class="w-100">
@@ -116,7 +127,7 @@
                                         <div class="col-lg-3 col-md-6 d-flex stat my-3">
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Anuncios publicados</h6>
-                                                <h3 style="text-align: center" class="font-weight-bold"><%= anuncios.size()  %></h3>
+                                                <h3 style="text-align: center" class="font-weight-bold"><%= anuncios.size()%></h3>
                                             </div>
                                         </div>
                                         <div class="col-lg-3 col-md-6 d-flex stat my-3">
@@ -128,7 +139,7 @@
                                         <div class="col-lg-3 col-md-6 d-flex my-3">
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Empresas registradas</h6>
-                                                <h3 style="text-align: center" class="font-weight-bold"><%= controladorAnuncios.empresas(bd).size() %></h3>
+                                                <h3 style="text-align: center" class="font-weight-bold"><%= controladorAnuncios.empresas(bd).size()%></h3>
                                             </div>
                                         </div>
                                     </div>
