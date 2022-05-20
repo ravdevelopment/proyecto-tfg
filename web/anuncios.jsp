@@ -93,21 +93,26 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-9 col-md-8">
-                                    <h1 style="text-align: center" class="font-weight-bold mb-0"> Filtrar anuncios
+                                    <h1 id="textofiltanuncios" style="text-align: center" class="font-weight-bold mb-0"> Filtrar anuncios
                                     </h1>
                                 </div>
 
-                                <!-- 
-                                COMPROBACION SI TIENE ROL DE EMPRESA 
-                                >-->
+                                <%
+                                    for (int i = 0; i < rolesusuario.getRoles().size(); i++) {
+                                        if (rolesusuario.getRoles().get(i).getNombre_rol().equals("empresa")) {
+                                %>
                                 <div class="col-lg-3 col-md-4 d-flex">
-                                    <button style="background-color: gray !important" class="btn-primary w-100 align-self-center" disabled=""> PUBLICAR OFERTA DE EMPLEO </button>
+                                    <button id="botonPublicarOferta" class="btn-primary w-100 align-self-center"> PUBLICAR OFERTA DE EMPLEO </button>
                                 </div>
                             </div>
+                            <%
+                                    }
+                                }
+                            %>
                         </div>
                     </section>
 
-                    <section class="bg-mix py-3">
+                    <section id="seccionFiltroAnuncios2" class="bg-mix py-3">
                         <div class="container">
                             <div class="card rounded-0">
                                 <div class="card-body">
@@ -154,7 +159,52 @@
                             </div>
                         </div>
                     </section>
-                    <section>
+                    <div id="seccionPublicarOferta" style="display: none" class="col-md-8 mx-auto">
+                        <div class="card rounded-0">
+                            <div class="card-header bg-light">
+                                <h6 style="text-align: center" class="font-weight-bold mb-0">Añadir nueva oferta de empleo</h6>
+                            </div>
+                            <div class="card-body pt-2">
+                                <form action="controller" method="post">
+                                    <input type="hidden" name="dni_usuario" value="<%= usuario_conectado.getDni()%>">
+                                    <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3">
+                                        <div class="align-self-center">
+                                            <h6 class="d-block text-muted">Nombre de la empresa</h6>
+                                            <input type="text" class="col-md-12" id="nombre_empresa" name="nombre_empresa" value=""/>
+                                        </div>
+                                    </div>
+                                    <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3">
+                                        <div class="align-self-center">
+                                            <h6 class="d-block text-muted">Municipio</h6>
+                                            <input class="col-md-12" type="text" id="Municipio" name="Municipio" value=""/>
+                                        </div>
+                                    </div>
+                                    <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3">
+                                        <div class="align-self-center">
+                                            <h6 class="d-block text-muted">Email</h6>
+                                            <input class="col-md-12" type="text" name="email" value=""/>
+                                        </div>
+                                    </div>
+                                    <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3">
+                                        <div class="align-self-center">
+                                            <h6 class="d-block text-muted">Teléfono</h6>
+                                            <input class="col-md-12" type="text" name="telefono" value=""/>
+                                        </div>
+                                    </div>
+                                    <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3">
+                                        <div class="align-self-center">
+                                            <h6 class="d-block text-muted" style="text-align: center">¿Que estás buscando?</h6>
+                                            <textarea class="col-md-12" name="mensaje" value="" cols="50" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                                    <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3">
+                                        <input type="submit" class="btn btn-primary w-50" value="Publicar oferta">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <section id="seccionFiltroAnuncios">
                         <div class="container">
                             <div style="justify-content: center" class="row">
                                 <%                    for (int i = 0; i < listaanuncios.size(); i++) {%>
@@ -206,62 +256,7 @@
                                     </div>
                                 </div>
                                 <% }%>
-                                <div style="display: none" id="modificarmisdatos" class="col-lg-4 my-3 mx-auto">
-                                    <div class="card rounded-0">
-                                        <div class="card-header bg-light">
-                                            <h6 style="text-align: center" class="font-weight-bold mb-0">Mis datos de usuario</h6>
-                                        </div>
-                                        <div class="card-body pt-2">
-                                            <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3, datosusuario">
-                                                <div class="d-flex mr-3">
-                                                    <h2 class="align-self-center mb-0"><i class="fa-solid fa-user-pen"></i></h2>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <h6 class="d-block text-muted">Nombre</h6>
-                                                    <input type="text" id="nombre" name="nombre" value="<%= usuario_conectado.getNombre()%>" />
-                                                </div>
-                                            </div>
-                                            <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3, datosusuario">
-                                                <div class="d-flex mr-3">
-                                                    <h2 class="align-self-center mb-0"><i class="fa-solid fa-user-pen"></i></h2>
-                                                </div>
 
-                                                <div class="align-self-center">
-                                                    <h6 class="d-block text-muted">Apellidos</h6>
-                                                    <input type="text" id="apellidos" name="apellidos" value="<%= usuario_conectado.getApellidos()%>"/>
-                                                </div>
-                                            </div>
-                                            <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3, datosusuario">
-                                                <div class="d-flex mr-3">
-                                                    <h2 class="align-self-center mb-0"><i class="fa-solid fa-envelope"></i></h2>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <h6 class="d-block text-muted">Email</h6>
-                                                    <input type="text" name="email" value="<%= usuario_conectado.getEmail()%>"/>
-                                                </div>
-                                            </div>
-                                            <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3, datosusuario">
-                                                <div class="d-flex mr-3">
-                                                    <h2 class="align-self-center mb-0"><i class="fa-solid fa-lock"></i></h2>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <h6 class="d-block text-muted">Contraseña</h6>
-                                                    <input type="password" name="password" value="*********"/>
-                                                </div>
-                                            </div>
-                                            <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3, datosusuario">
-                                                <div class="d-flex mr-3">
-                                                    <h2 class="align-self-center mb-0"><i class="fa-solid fa-mobile-screen"></i></h2>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <h6 class="d-block text-muted">Teléfono</h6>
-                                                    <input type="text" name="telefono" value="<%= usuario_conectado.getTelefonoContacto()%>"/>
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-primary w-100">Modificar</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </section>
@@ -281,6 +276,23 @@
         crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"
         integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+        <script>
+            document.getElementById("botonPublicarOferta").addEventListener("click", (ev) => {
+                if (document.getElementById("seccionPublicarOferta").style.display == "none") {
+                    document.getElementById("seccionPublicarOferta").style.display = "block";
+                    document.getElementById("seccionFiltroAnuncios").style.display = "none";
+                    document.getElementById("seccionFiltroAnuncios2").style.display = "none";
+                    document.getElementById("textofiltanuncios").textContent = "";
+                    document.getElementById("botonPublicarOferta").textContent = "Volver";
+                } else {
+                    document.getElementById("seccionPublicarOferta").style.display = "none";
+                    document.getElementById("seccionFiltroAnuncios").style.display = "block";
+                    document.getElementById("seccionFiltroAnuncios2").style.display = "block";
+                    document.getElementById("textofiltanuncios").textContent = "Filtrar Anuncios";
+                    document.getElementById("botonPublicarOferta").textContent = "PUBLICAR OFERTA DE EMPLEO";
+                }
+            });
+        </script>
     </body>
 
 </html>
