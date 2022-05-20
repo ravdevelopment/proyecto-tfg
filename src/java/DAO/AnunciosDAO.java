@@ -21,7 +21,7 @@ public class AnunciosDAO {
     public ArrayList<Anuncio> cargarAnuncios(Connection bd) {
         ArrayList<Anuncio> anunciosPublicados = new ArrayList<Anuncio>();
         try {
-            
+
             Statement st = bd.createStatement();
             ResultSet resultadoDAO = st.executeQuery("SELECT * from anuncio");
             int count = 0;
@@ -51,35 +51,35 @@ public class AnunciosDAO {
             Statement st = bd.createStatement();
             ResultSet resultadoDAO = st.executeQuery("SELECT DISTINCT municipio from anuncio");
             while (resultadoDAO.next()) {
-              listalocalidades.add(resultadoDAO.getString("municipio"));
+                listalocalidades.add(resultadoDAO.getString("municipio"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return listalocalidades;
     }
-    
+
     public ArrayList<String> empresas(Connection bd) {
         ArrayList<String> nombreempresas = new ArrayList<String>();
         try {
             Statement st = bd.createStatement();
             ResultSet resultadoDAO = st.executeQuery("SELECT DISTINCT nombre_empresa from anuncio");
             while (resultadoDAO.next()) {
-              nombreempresas.add(resultadoDAO.getString("nombre_empresa"));
+                nombreempresas.add(resultadoDAO.getString("nombre_empresa"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return nombreempresas;
     }
-    
+
     public ArrayList<Date> fechapublicaciones(Connection bd) {
         ArrayList<Date> fechapublicaciones = new ArrayList<Date>();
         try {
             Statement st = bd.createStatement();
             ResultSet resultadoDAO = st.executeQuery("SELECT DISTINCT fecha_publicacion from anuncio");
             while (resultadoDAO.next()) {
-              fechapublicaciones.add(resultadoDAO.getDate("fecha_publicacion"));
+                fechapublicaciones.add(resultadoDAO.getDate("fecha_publicacion"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -87,4 +87,22 @@ public class AnunciosDAO {
         return fechapublicaciones;
     }
 
+    public boolean insertarAnuncio(String dni, String municipio, String nombre_empresa, int telefono, String mensaje, String email, Connection bd) {
+        Boolean evaluacion_registro = true;
+        try {
+            Statement st = bd.createStatement();
+            st.executeUpdate("INSERT INTO anuncio(dni_usuario, municipio, nombre_empresa, telefono, mensaje, email) "
+                    + "VALUES ('" + dni + "', '"
+                    + municipio + "', "
+                    + nombre_empresa + "', '"
+                    + telefono + "', '"
+                    + mensaje + "', '"
+                    + email + "')");
+        } catch (Exception ex) {
+            evaluacion_registro = false;
+        }
+        return evaluacion_registro;
+    }
+
+    // INSERT INTO anuncio(dni_usuario, municipio, fecha_publicacion, nombre_empresa, telefono, mensaje, email) VALUES ()
 }

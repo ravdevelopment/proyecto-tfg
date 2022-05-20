@@ -121,6 +121,7 @@
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Por Localidad</h6>
                                                 <select name="localidad">
+                                                    <option>Todas las localidades</option>
                                                     <% for (int i = 0; i < controladorAnuncios.localidades(bd).size(); i++) {
                                                     %>
                                                     <option><%=controladorAnuncios.localidades(bd).get(i)%></option>
@@ -132,6 +133,7 @@
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Por Empresa</h6>
                                                 <select name="nombre_empresa">
+                                                    <option>Todas las empresas</option>
                                                     <% for (int i = 0; i < controladorAnuncios.empresas(bd).size(); i++) {%>
                                                     <option><%=controladorAnuncios.empresas(bd).get(i)%></option>
                                                     <% }%>
@@ -142,6 +144,7 @@
                                             <div class="mx-auto">
                                                 <h6 class="text-muted">Por Fecha</h6>
                                                 <select name="fecha_publicacion">
+                                                    <option>Todas las fechas</option>
                                                     <% for (int i = 0; i < controladorAnuncios.fechapublicaciones(bd).size(); i++) {%>
                                                     <option><%=controladorAnuncios.fechapublicaciones(bd).get(i)%></option>
                                                     <% }%>
@@ -166,6 +169,7 @@
                             </div>
                             <div class="card-body pt-2">
                                 <form action="controller" method="post">
+                                    <input type="hidden" name="estado" value="publicaradd">
                                     <input type="hidden" name="dni_usuario" value="<%= usuario_conectado.getDni()%>">
                                     <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3">
                                         <div class="align-self-center">
@@ -176,7 +180,7 @@
                                     <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3">
                                         <div class="align-self-center">
                                             <h6 class="d-block text-muted">Municipio</h6>
-                                            <input class="col-md-12" type="text" id="Municipio" name="Municipio" value=""/>
+                                            <input class="col-md-12" type="text" id="Municipio" name="municipio" value=""/>
                                         </div>
                                     </div>
                                     <div style="justify-content: center" class="d-flex border-bottom py-2 mb-3">

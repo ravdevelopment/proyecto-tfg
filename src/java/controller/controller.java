@@ -5,6 +5,7 @@
  */
 package controller;
 
+import DAO.AnunciosDAO;
 import DAO.ConnectorBD;
 import DAO.UsuariosDAO;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class controller extends HttpServlet {
 
     private UsuariosDAO usuariosDAO;
     private Connection baseDatos;
+    private AnunciosDAO controladoranuncios;
     String dniAcceso;
     String passwordAcceso;
     String estado;
@@ -45,6 +47,7 @@ public class controller extends HttpServlet {
         ConnectorBD conexion = new ConnectorBD(servidor, database, usuario, password);
         baseDatos = conexion.getConexion();
         usuariosDAO = new UsuariosDAO();
+        controladoranuncios = new AnunciosDAO();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -55,9 +58,7 @@ public class controller extends HttpServlet {
         estado = request.getParameter("estado");
         String accion = request.getParameter("accion");
         String nextPage = "";
-        
-        
-        
+
         if (estado.equals("menu")) {
             dniAcceso = request.getParameter("dni");
             passwordAcceso = request.getParameter("password");
@@ -71,22 +72,22 @@ public class controller extends HttpServlet {
                 nextPage = "/index.jsp";
             }
         }
-        if(estado.equals("inicio") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
+        if (estado.equals("inicio") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             nextPage = "/menu.jsp";
         }
-        if(estado.equals("anuncios") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
+        if (estado.equals("anuncios") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             nextPage = "/anuncios.jsp";
         }
-        if(estado.equals("proyectos") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
+        if (estado.equals("proyectos") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             nextPage = "/proyectos.jsp";
         }
-        if(estado.equals("calificaciones") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
+        if (estado.equals("calificaciones") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             nextPage = "/calificaciones.jsp";
         }
-        if(estado.equals("miperfil") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
+        if (estado.equals("miperfil") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             nextPage = "/miperfil.jsp";
         }
-        
+
         if (estado.equals("registro")) {
             String dniRegistro = request.getParameter("dniRegistro");
             String nombreRegistro = request.getParameter("nombreRegistro");
@@ -114,7 +115,7 @@ public class controller extends HttpServlet {
             response.sendRedirect("index.jsp");
             return;
         }
-        
+
         if (estado.equals("modificar_datos_usuario") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
             String nombre_usuario = request.getParameter("nombre_usuario");
             String apellidos_usuario = request.getParameter("apellidos_usuario");
@@ -126,6 +127,16 @@ public class controller extends HttpServlet {
             String dni_usuario = usuario_conectado.getDni();
             usuariosDAO.modificarDatosUsuario(baseDatos, nombre_usuario, apellidos_usuario, municipio_usuario, email_usuario, password_usuario, dni_usuario, estado_usuario);
             nextPage = "/miperfil.jsp";
+        }
+
+        if (estado.equals("publicaradd") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
+            String nombre_empresa = request.getParameter("nombre_empresa");
+            String municipio = request.getParameter("municipio");
+            String email = request.getParameter("email");
+            int telefono = Integer.parseInt(request.getParameter("telefono"));
+            String mensaje = request.getParameter("mensaje");
+            controladoranuncios.insertarAnuncio(dniAcceso, municipio, nombre_empresa, telefono, mensaje, email, baseDatos);
+            nextPage = "/anuncios.jsp";
         }
 
         ServletContext servletContext = getServletContext();
