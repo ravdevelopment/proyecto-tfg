@@ -32,6 +32,7 @@ public class UsuariosDAO {
                 nuevoUsuario.setEstado(resultadoDAO.getString("estado"));
                 nuevoUsuario.setTelefonoContacto(resultadoDAO.getInt("telefono"));
                 nuevoUsuario.setNota(resultadoDAO.getFloat("nota"));
+                nuevoUsuario.setEnlace_proyecto(resultadoDAO.getString("enlace_proyecto"));
                 listaUsuarios.add(nuevoUsuario);
                 count++;
             }
@@ -93,6 +94,8 @@ public class UsuariosDAO {
                 usuario_conectado.setEstado(resultadoDAO.getString("estado"));
                 usuario_conectado.setTelefonoContacto(resultadoDAO.getInt("telefono"));
                 usuario_conectado.setNota(resultadoDAO.getFloat("nota"));
+                usuario_conectado.setEnlace_proyecto(resultadoDAO.getString("enlace_proyecto"));
+                usuario_conectado.setImagen(resultadoDAO.getString("imagen"));
                 count++;
             }
         } catch (Exception ex) {
@@ -141,4 +144,33 @@ public class UsuariosDAO {
         } catch (SQLException ex) {
         }
     }
+
+    public ArrayList<Usuario> obtenerDatosUsuarios(Connection bd) {
+        ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
+        try {
+            Statement st = bd.createStatement();
+            ResultSet resultadoDAO = st.executeQuery("SELECT * FROM usuario,usuario_rol WHERE (usuario_rol.dni_usuario = usuario.dni AND usuario_rol.id_rol = '2')");
+            int count = 0;
+            while (resultadoDAO.next()) {
+                Usuario nuevoUsuario = new Usuario();
+                nuevoUsuario.setDni(resultadoDAO.getString("dni"));
+                nuevoUsuario.setNombre(resultadoDAO.getString("nombre"));
+                nuevoUsuario.setApellidos(resultadoDAO.getString("apellidos"));
+                nuevoUsuario.setMunicipio(resultadoDAO.getString("municipio"));
+                nuevoUsuario.setEmail(resultadoDAO.getString("email"));
+                nuevoUsuario.setPassword(resultadoDAO.getString("password"));
+                nuevoUsuario.setEstado(resultadoDAO.getString("estado"));
+                nuevoUsuario.setTelefonoContacto(resultadoDAO.getInt("telefono"));
+                nuevoUsuario.setNota(resultadoDAO.getFloat("nota"));
+                nuevoUsuario.setEnlace_proyecto(resultadoDAO.getString("enlace_proyecto"));
+                nuevoUsuario.setImagen(resultadoDAO.getString("imagen"));
+                listaUsuarios.add(nuevoUsuario);
+                count++;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return listaUsuarios;
+    }
+
 }

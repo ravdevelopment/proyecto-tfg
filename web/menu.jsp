@@ -32,10 +32,12 @@
     <body>
         <%
             Usuario usuario_conectado = (Usuario) session.getAttribute("usuarioConectado");
+            
             Connection bd = (Connection) session.getAttribute("database");
             AnunciosDAO controladorAnuncios = new AnunciosDAO();
             ArrayList<Anuncio> anuncios = controladorAnuncios.cargarAnuncios(bd);
             UsuariosDAO controladorUsuariosDAO = new UsuariosDAO();
+            usuario_conectado = controladorUsuariosDAO.obtenerDatosUsuario(usuario_conectado.getDni(), bd);
             ArrayList<Usuario> usuarios = controladorUsuariosDAO.cargarUsuarios(bd);
             Usuario_Rol rolesusuario = new Usuario_Rol();
             rolesusuario = controladorUsuariosDAO.obtenerRolesUsuario(bd, usuario_conectado.getDni());
@@ -49,10 +51,10 @@
                     <a href="controller?estado=inicio" class="d-block text-light p-3 border-0"><i class="icon ion-md-apps lead mr-2"></i>
                         Inicio</a>
 
-                    <a href="#" class="d-block text-light p-3 border-0"><i class="icon ion-md-people lead mr-2"></i>
-                        Usuarios</a>
+                    <a href="controller?estado=alumnos" class="d-block text-light p-3 border-0"><i class="icon ion-md-people lead mr-2"></i>
+                        Alumnos</a>
 
-                    <a href="#" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i>
+                    <a href="controller?estado=proyectos" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i>
                         Proyectos</a>
                     <a href="controller?estado=anuncios" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i>
                         Anuncios</a>
@@ -83,7 +85,18 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="https://randomuser.me/api/portraits/men/75.jpg" class="img-fluid rounded-circle avatar mr-2" alt="" />
+                                         <% if (usuario_conectado.getImagen().equals("no imagen")) {
+
+                                            %>
+                                            <img src="" class="rounded-circle ion-md-person mr-2" alt="" />
+                                            <%                                             } else {
+                                            %>
+                                            <img src="<%= usuario_conectado.getImagen()%>" class="rounded-circle ion-md-person mr-2 avatar" alt=""/>
+
+                                            <%
+
+                                                }
+                                            %>
                                         <%= usuario_conectado.getNombre()%>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -103,7 +116,7 @@
                             <div class="row">
                                 <div class="col-lg-9 col-md-8">
                                     <h1 class="font-weight-bold mb-0"> Bienvenido <%= usuario_conectado.getNombre()%>
-                                        <img src="https://randomuser.me/api/portraits/men/75.jpg" class="img-fluid rounded-circle" alt="" />
+                                        <img src="https://media-exp1.licdn.com/dms/image/C4E03AQFE1Gqrd-XodA/profile-displayphoto-shrink_800_800/0/1638114847245?e=1658361600&v=beta&t=_camfrU3KCp7RFMfXqkscjm0Nxa_MXY0zXdSVsulPQ8" class="img-fluid rounded-circle" width="177px" alt="" />
                                     </h1>
                                 </div>
                                 <!-- <div class="col-lg-3 col-md-4 d-flex">
@@ -132,7 +145,7 @@
                                         </div>
                                         <div class="col-lg-3 col-md-6 d-flex stat my-3">
                                             <div class="mx-auto">
-                                                <h6 class="text-muted">Alumnos registrados</h6>
+                                                <h6 class="text-muted">Usuarios registrados</h6>
                                                 <h3 style="text-align: center" class="font-weight-bold"><%=usuarios.size()%></h3>
                                             </div>
                                         </div>
@@ -156,8 +169,12 @@
                                             <h6 style="text-align: center" class="font-weight-bold mb-0">Últimos anuncios publicados</h6>
                                         </div>
                                         <div class="card-body pt-2">
-                                            <%                    for (int i = 0; i < anuncios.size(); i++) {%>
-                                            <div class="d-flex border-bottom py-2 mb-3, anunciosempresas">
+                                            <%                    for (int i = 0; i < anuncios.size(); i++) {
+                                                   if (i == 4) {
+                                                      break;
+                                                   }
+                                            %>
+                                            <div class="d-flex border-bottom py-2 mb-3">
                                                 <div class="d-flex mr-3">
                                                     <h2 class="align-self-center mb-0"><img style="width: 2em" src="<%= anuncios.get(i).getLogo()%>"</h2>
                                                 </div>

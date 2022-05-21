@@ -88,6 +88,14 @@ public class controller extends HttpServlet {
             nextPage = "/miperfil.jsp";
         }
 
+        if (estado.equals("alumnos") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
+            nextPage = "/alumnos.jsp";
+        }
+        
+        if (estado.equals("proyectos") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
+            nextPage = "/proyectos.jsp";
+        }
+        
         if (estado.equals("registro")) {
             String dniRegistro = request.getParameter("dniRegistro");
             String nombreRegistro = request.getParameter("nombreRegistro");
@@ -129,11 +137,11 @@ public class controller extends HttpServlet {
             nextPage = "/miperfil.jsp";
         }
 
-        if (estado.equals("publicaradd") && (usuariosDAO.comprobarUsuario(dniAcceso, passwordAcceso, baseDatos) == true)) {
+        if (estado.equals("publicaradd")){
             String nombre_empresa = request.getParameter("nombre_empresa");
             String municipio = request.getParameter("municipio");
             String email = request.getParameter("email");
-            int telefono = Integer.parseInt(request.getParameter("telefono"));
+            Integer telefono = Integer.parseInt(request.getParameter("telefono"));
             String mensaje = request.getParameter("mensaje");
             controladoranuncios.insertarAnuncio(dniAcceso, municipio, nombre_empresa, telefono, mensaje, email, baseDatos);
             nextPage = "/anuncios.jsp";

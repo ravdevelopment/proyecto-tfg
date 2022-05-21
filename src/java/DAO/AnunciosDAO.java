@@ -93,7 +93,7 @@ public class AnunciosDAO {
             Statement st = bd.createStatement();
             st.executeUpdate("INSERT INTO anuncio(dni_usuario, municipio, nombre_empresa, telefono, mensaje, email) "
                     + "VALUES ('" + dni + "', '"
-                    + municipio + "', "
+                    + municipio + "', '"
                     + nombre_empresa + "', '"
                     + telefono + "', '"
                     + mensaje + "', '"
@@ -104,5 +104,4 @@ public class AnunciosDAO {
         return evaluacion_registro;
     }
 
-    // INSERT INTO anuncio(dni_usuario, municipio, fecha_publicacion, nombre_empresa, telefono, mensaje, email) VALUES ()
 }

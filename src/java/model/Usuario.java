@@ -18,7 +18,7 @@ public class Usuario {
 //    String imagen;
     Float nota;
     String imagen;
-
+    String enlace_proyecto;
     public Usuario() {
     }
 
@@ -134,4 +134,13 @@ public class Usuario {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public String getEnlace_proyecto() {
+        return enlace_proyecto;
+    }
+
+    public void setEnlace_proyecto(String enlace_proyecto) {
+        this.enlace_proyecto = enlace_proyecto;
+    }
+    
 }

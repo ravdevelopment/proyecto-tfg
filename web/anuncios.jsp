@@ -49,15 +49,24 @@
                     <a href="controller?estado=inicio" class="d-block text-light p-3 border-0"><i class="icon ion-md-apps lead mr-2"></i>
                         Inicio</a>
 
-                    <a href="#" class="d-block text-light p-3 border-0"><i class="icon ion-md-people lead mr-2"></i>
-                        Usuarios</a>
+                    <a href="controller?estado=alumnos" class="d-block text-light p-3 border-0"><i class="icon ion-md-people lead mr-2"></i>
+                        Alumnos</a>
 
-                    <a href="#" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i>
+                    <a href="controller?estado=proyectos" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i>
                         Proyectos</a>
                     <a href="controller?estado=anuncios" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i>
                         Anuncios</a>
+                        <%
+                            for (int i = 0; i < rolesusuario.getRoles().size(); i++) {
+                                if (rolesusuario.getRoles().get(i).getNombre_rol().equals("administrador")) {
+                        %>
                     <a href="#" class="d-block text-light p-3 border-0"> <i class="icon ion-md-settings lead mr-2"></i>
                         Configuración</a>
+                        <%
+                                }
+                            }
+                        %>
+
                 </div>
             </div>
             <div class="w-100">
@@ -74,7 +83,18 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="https://randomuser.me/api/portraits/thumb/men/75.jpg" class="img-fluid rounded-circle avatar mr-2" alt="" />
+                                         <% if (usuario_conectado.getImagen().equals("no imagen")) {
+
+                                            %>
+                                            <img src="" class="rounded-circle ion-md-person mr-2" alt="" />
+                                            <%                                             } else {
+                                            %>
+                                            <img src="<%= usuario_conectado.getImagen()%>" class="rounded-circle ion-md-person mr-2 avatar" alt=""/>
+
+                                            <%
+
+                                                }
+                                            %>
                                         <%= usuario_conectado.getNombre()%>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -87,6 +107,7 @@
                         </div>
                     </div>
                 </nav>
+            
                 <div id="content" class="bg-grey w-100">
 
                     <section class="bg-light py-3">
@@ -227,7 +248,7 @@
 
                                                 <div class="d-flex border-bottom py-2 mb-3">
 
-                                                    <div class="align-self-center">
+                                                    <div class="">
                                                         <h3 class=""><%= listaanuncios.get(i).getNombre_empresa()%></h3>
                                                         <h5 class=""><%= listaanuncios.get(i).getMunicipio()%></h5>
                                                         <%= listaanuncios.get(i).getMensaje()%>
@@ -268,6 +289,7 @@
                 </div>
 
             </div>
+        </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
